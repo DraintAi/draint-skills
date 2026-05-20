@@ -1,0 +1,6 @@
+{
+  "name": "draint-security",
+  "description": "drain't security skill for Codex — EIP-7702 drainer protection via @draint/sdk",
+  "version": "0.1.0",
+  "entry": "../skills/security/SKILL.md"
+}

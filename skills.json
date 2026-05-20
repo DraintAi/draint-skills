@@ -1,0 +1,17 @@
+{
+  "$schema": "https://draint.vercel.app/schemas/skills.v1.json",
+  "name": "draint-skills",
+  "version": "0.1.0",
+  "description": "Build-time Agent Skills for drain't — AI security agent that protects from EIP-7702 delegation drainer attacks",
+  "homepage": "https://github.com/DraintAi",
+  "license": "MIT",
+  "skills": [
+    {
+      "name": "security",
+      "path": "skills/security",
+      "description": "Pre-sign classification + delegation safety + rescue patterns for drain't SDK integration",
+      "tags": ["web3", "security", "eip-7702", "metamask", "ai-agent"],
+      "supports": ["claude-code", "cursor", "codex"]
+    }
+  ]
+}
