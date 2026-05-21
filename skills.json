@@ -1,17 +1,26 @@
 {
   "$schema": "https://draint.vercel.app/schemas/skills.v1.json",
   "name": "draint-skills",
-  "version": "0.1.0",
-  "description": "Build-time Agent Skills for drain't — AI security agent that protects from EIP-7702 delegation drainer attacks",
+  "version": "0.2.0",
+  "description": "Build-time Agent Skills for drain't — AI security agent that protects from EIP-7702 delegation drainer attacks. Install into Claude Code, Cursor, or Codex.",
   "homepage": "https://github.com/DraintAi",
   "license": "MIT",
   "skills": [
     {
       "name": "security",
       "path": "skills/security",
-      "description": "Pre-sign classification + delegation safety + rescue patterns for drain't SDK integration",
-      "tags": ["web3", "security", "eip-7702", "metamask", "ai-agent"],
-      "supports": ["claude-code", "cursor", "codex"]
+      "entry": "SKILL.md",
+      "description": "EIP-7702 delegation drainer + Permit phishing defense. Integration patterns for AI trading agents, DeFi agents, and MetaMask Snaps. Composition with Venice AI (classifier brain) and 1Shot Permissionless Relayer (gasless rescue).",
+      "tags": ["web3", "security", "eip-7702", "metamask", "ai-agent", "crimeenjoyor", "permit-phishing"],
+      "supports": ["claude-code", "cursor", "codex"],
+      "examples": [
+        "skills/security/examples/trading-bot-protection.ts",
+        "skills/security/examples/defi-agent-integration.ts",
+        "skills/security/examples/snap-integration.ts"
+      ],
+      "references": [
+        "skills/security/api-reference.md"
+      ]
     }
   ]
 }

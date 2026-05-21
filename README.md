@@ -1,48 +1,82 @@
 # draint-skills
 
-> **Build-time Agent Skills for [drain't](https://github.com/DraintAi)** — install into your AI coding environment (Claude Code, Cursor, Codex) to get integration guidance for the drain't security API.
+> **Build-time Agent Skills for [drain't](https://github.com/DraintAi)** — install into your AI coding environment (Claude Code, Cursor, Codex) for production integration guidance.
+>
+> _Wallet drain? Didn't happen._
 
-One folder per surface area, each with a `SKILL.md` for agent runtimes.
-
-## What is this?
-
-drain't is an AI security agent that protects wallets from EIP-7702 delegation drainer attacks. While building your own AI agent (trading bot, DeFi assistant, AA wallet, etc.), you can integrate drain't via:
-
-- **Runtime SDK** — `npm install @draint/sdk` — your agent calls drain't at runtime
-- **Build-time skill (this repo)** — install into your coding env, get best-practice guidance + code samples while you build
-
-Modeled after [`veniceai/skills`](https://github.com/veniceai/skills) and [1Shot API skills](https://1shotapi.com/docs/quickstarts/gas-sponsorship-eip7710) conventions.
+drain't is an AI security agent + composable skill that defends Ethereum wallets against **EIP-7702 delegation drainer attacks** (CrimeEnjoyor family) and **Permit / Permit2 phishing**.
 
 ## Install
 
-### Claude Code / Cursor / Codex (universal)
-
 ```bash
+# Universal — any skill-aware AI coding env
 npx skills add DraintAi/draint-skills/security
 ```
 
-After install, your coding agent has access to:
-- Integration patterns for `@draint/sdk`
-- EIP-7702 delegation safety checklist
-- Sample code: trading bot guard, DeFi agent protection, MetaMask Snap pattern
-- Common gotchas + debugging tips
+After install, your coding agent will have full context on:
 
-## Available skills
+- drain't SDK methods, types, and error shapes
+- The threat model (EIP-7702 delegation drainer mechanics, CrimeEnjoyor signature)
+- Integration patterns for trading bots, DeFi agents, MetaMask Snaps
+- Decision flow for severity-based response
+- Composition with 1Shot Permissionless Relayer for gasless rescue
 
-| Skill | Purpose |
-|---|---|
-| `security` | Pre-sign classification, delegation safety, rescue patterns |
+## What's in the box
 
-(More surfaces will land Day 12+ during hackathon build.)
+```
+draint-skills/
+├── skills/
+│   └── security/
+│       ├── SKILL.md                         # full skill spec
+│       ├── api-reference.md                 # endpoint + SDK reference
+│       └── examples/
+│           ├── trading-bot-protection.ts    # Pattern A: pre-sign guard
+│           ├── defi-agent-integration.ts    # Pattern B: subscribe + alert
+│           └── snap-integration.ts          # Pattern C: MetaMask Snap
+├── template/                                 # scaffold for future skills
+└── skills.json                               # manifest
+```
 
-## Manifest
+## Two ways to consume drain't
 
-See `skills.json` for the canonical skill index.
+1. **Build-time skill** (this repo) — your AI coding agent loads the docs and writes correct integration code on day one.
+2. **Runtime SDK** — `bun add @draint/sdk` (publishes Day 14 of the hackathon). Your code calls drain't at execution time.
+
+Both layers share the same backend: https://draint-be.vercel.app.
+
+## Quick start (runtime)
+
+```ts
+// Until @draint/sdk ships, call REST directly
+const res = await fetch("https://draint-be.vercel.app/api/classify", {
+  method: "POST",
+  headers: { "content-type": "application/json" },
+  body: JSON.stringify({ chainId: 1, target: "0x..." }),
+});
+const verdict = await res.json();
+
+if (verdict.severity === "critical") {
+  // Block the user from signing / abort tx
+}
+```
+
+See [`skills/security/SKILL.md`](./skills/security/SKILL.md) for the full guide.
+
+## Convention
+
+This repo follows the same skill-as-docs pattern as:
+
+- **[veniceai/skills](https://github.com/veniceai/skills)** — Venice AI's coding-env skill pack
+- **[1Shot-API/skills](https://1shotapi.com/docs)** — 1Shot Permissionless Relayer skill
+
+Install all three, and you have a complete agentic-Web3 stack in your coding env: drain't (security) + Venice (intelligence) + 1Shot (execution).
+
+## Contributing
+
+Add new skills under `skills/<name>/`. Each must have a `SKILL.md` with frontmatter (`name`, `version`, `description`, `keywords`). Update `skills.json` to register.
 
 ## License
 
 MIT — see [LICENSE](./LICENSE).
 
----
-
-Part of the **MetaMask Smart Accounts Kit x 1Shot API Hackathon** submission. See [PLAN.md](https://github.com/DraintAi) for full project context.
+Built for the **MetaMask Smart Accounts Kit x 1Shot API Hackathon**, 2026. See the [project plan](https://github.com/DraintAi) for full context.
